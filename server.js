@@ -18,17 +18,6 @@ app.use("/api/products", productRoute);
 app.use(notFound);
 app.use(errorHandler);
 
-// //get all products
-// app.get("/api/products", (req, res) => {
-//   res.status(200).json({ products });
-// });
-
-// //get single item of bread
-// app.get("/api/products/:name", (req, res) => {
-//   const product = bread.find((b) => b.name === req.params.name);
-//   res.status(200).json({ bread });
-// });
-
 app.get("/", (req, res) => {
   res.send("API is live...");
 });
