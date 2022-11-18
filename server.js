@@ -6,10 +6,12 @@ import productRouter from "./routes/Product.Routes.js";
 import { errorHandler, notFound } from "./middleware/Error.js";
 import userRouter from "./routes/User.Routes.js";
 import shoppingListRouter from "./routes/ShoppingList.Routes.js";
+import cors from "cors";
 
 dotenv.config();
 connectDatabase();
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 //API
