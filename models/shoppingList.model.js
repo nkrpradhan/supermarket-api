@@ -10,7 +10,7 @@ const shoppingListSchema = mongoose.Schema({
       supermarket: { type: String, required: true },
       product: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: "Product",
       },
     },

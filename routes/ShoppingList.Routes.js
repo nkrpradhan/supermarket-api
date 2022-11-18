@@ -8,17 +8,17 @@ const shoppingListRouter = express.Router();
 shoppingListRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { listItems } = req.body;
+    const listItems = req.body;
 
-    if (listItems && listItems === 0) {
+    if (listItems && listItems.length === 0) {
       res.status(400);
       throw new Error("There are no items in your shopping list");
-      return;
     } else {
       const list = new ShoppingList({
-        user: req.user._id,
+        user: req.body._id,
         listItems,
       });
+
       const createList = await list.save();
       res.status(201).json(createList);
     }
