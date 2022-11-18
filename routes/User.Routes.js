@@ -2,10 +2,10 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import User from "../models/User.Model.js";
 
-const userRoute = express.Router();
+const userRouter = express.Router();
 
 //LOGIN
-userRoute.post(
+userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
@@ -28,7 +28,7 @@ userRoute.post(
 
 //REGISTER
 
-userRoute.post(
+userRouter.post(
   "/register",
   asyncHandler(async (req, res) => {
     const { name, username, email, password } = req.body;
@@ -59,7 +59,7 @@ userRoute.post(
 );
 
 //PROFILE
-userRoute.get(
+userRouter.get(
   "/:id/profile",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
@@ -79,7 +79,7 @@ userRoute.get(
 );
 
 //UPDATE PROFILE
-userRoute.put(
+userRouter.put(
   "/:id/profile",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
@@ -110,4 +110,4 @@ userRoute.put(
   })
 );
 
-export default userRoute;
+export default userRouter;

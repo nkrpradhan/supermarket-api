@@ -1,10 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDatabase from "./config/mongoDB.js";
-import ImportData from "./dataImport.js";
-import productRoute from "./routes/Product.Routes.js";
+import connectDatabase from "./config/MongoDB.js";
+import ImportData from "./DataImport.js";
+import productRouter from "./routes/Product.Routes.js";
 import { errorHandler, notFound } from "./middleware/Error.js";
-import userRoute from "./routes/User.Routes.js";
+import userRouter from "./routes/User.Routes.js";
+import shoppingListRouter from "./routes/ShoppingList.Routes.js";
 
 dotenv.config();
 connectDatabase();
@@ -13,8 +14,9 @@ app.use(express.json());
 
 //API
 app.use("/api/import", ImportData);
-app.use("/api/products", productRoute);
-app.use("/api/users", userRoute);
+app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
+app.use("/api/shopping-list/", shoppingListRouter);
 
 //ERROR HANDLERS
 app.use(notFound);
