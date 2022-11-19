@@ -1,28 +1,28 @@
-// import express from "express";
-// import User from "./models/User.Model.js";
-// import users from "./data/testData/users.js";
-// import Product from "./models/Products.Model.js";
-// import products from "./data/testData/products.js";
-// import asyncHandler from "express-async-handler";
+const express = require("express");
+const User = require("./models/user.Model.js");
+const users = require("./data/testData/users.js");
+const Product = require("./models/products.Model.js");
+const products = require("./data/testData/products.js");
+const asyncHandler = require("express-async-handler");
 
-// const ImportData = express.Router();
+const importData = express.Router();
 
-// ImportData.post(
-//   "/user",
-//   asyncHandler(async (req, res) => {
-//     await User.remove({});
-//     const ImportUser = await User.insertMany(users);
-//     res.status(201).send({ ImportUser });
-//   })
-// );
+importData.post(
+  "/user",
+  asyncHandler(async (req, res) => {
+    await User.remove({});
+    const importUser = await User.insertMany(users);
+    res.status(201).send({ importUser });
+  })
+);
 
-// ImportData.post(
-//   "/products",
-//   asyncHandler(async (req, res) => {
-//     await Product.remove({});
-//     const ImportProducts = await Product.insertMany(products);
-//     res.status(201).send({ ImportProducts });
-//   })
-// );
+importData.post(
+  "/products",
+  asyncHandler(async (req, res) => {
+    await Product.remove({});
+    const importProducts = await Product.insertMany(products);
+    res.status(201).send({ importProducts });
+  })
+);
 
-// export default ImportData;
+module.exports = importData;
