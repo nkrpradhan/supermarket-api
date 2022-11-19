@@ -1,7 +1,7 @@
 const express = require("express");
-const User = require("./models/user.Model.js");
+const User = require("./models/user.model.js");
 const users = require("./data/testData/users.js");
-const Product = require("./models/products.Model.js");
+const Product = require("./models/products.model.js");
 const products = require("./data/testData/products.js");
 const asyncHandler = require("express-async-handler");
 
