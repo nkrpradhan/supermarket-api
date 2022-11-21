@@ -62,7 +62,9 @@ userRouter.post(
 userRouter.get(
   "/:username/profile",
   asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.username);
+    const username = req.params.username;
+    const [user] = await User.find({ username });
+    console.log(user);
     if (user) {
       res.status(200).json({
         _id: user._id,
