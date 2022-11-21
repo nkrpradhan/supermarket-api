@@ -8,8 +8,8 @@ const userRouter = express.Router();
 userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
