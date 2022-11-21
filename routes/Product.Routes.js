@@ -9,7 +9,6 @@ productRouter.get(
   "/",
   asyncHandler(async (req, res) => {
     const products = await Product.find({});
-    console.log("controller", products);
     res.status(200).json(products);
   })
 );
