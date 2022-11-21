@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const shoppingListSchema = mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, require: true, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   listItems: [
     {
       name: { type: String, required: true },
