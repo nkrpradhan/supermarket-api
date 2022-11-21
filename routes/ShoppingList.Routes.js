@@ -9,6 +9,7 @@ shoppingListRouter.post(
   "/",
   asyncHandler(async (req, res) => {
     const listItems = req.body;
+    console.log(listItems);
 
     if (listItems && listItems.length === 0) {
       res.status(400);
