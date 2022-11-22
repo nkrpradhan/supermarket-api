@@ -1,6 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const ShoppingList = require("../models/shoppingList.model.js");
+const User = require("../models/user.model.js");
 
 const shoppingListRouter = express.Router();
 
@@ -8,20 +9,20 @@ const shoppingListRouter = express.Router();
 shoppingListRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const listItems = req.body;
-    console.log(listItems);
+    const { username, ...listItems } = req.body;
+    const user = await User.find({ username });
 
-    if (listItems && listItems.length === 0) {
-      res.status(400);
-      throw new Error("There are no items in your shopping list");
-    } else {
+    if (user) {
       const list = new ShoppingList({
-        listItems,
-        user: req.body._id,
+        username,
+        ...listItems,
       });
 
       const createList = await list.save();
       res.status(201).json(createList);
+    } else {
+      res.status(400);
+      throw new Error("Could not add items to your shopping list");
     }
   })
 );
@@ -31,7 +32,7 @@ shoppingListRouter.get(
   "/:username",
   asyncHandler(async (req, res) => {
     const username = req.params.username;
-    const list = await ShoppingList.find({ username }).populate("user");
+    const list = await ShoppingList.find({ username });
     if (list) {
       res.status(200).json(list);
     } else {
