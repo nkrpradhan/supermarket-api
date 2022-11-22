@@ -17,12 +17,11 @@ shoppingListRouter.post(
         username,
         ...listItems,
       });
-
       const createList = await list.save();
       res.status(201).json(createList);
     } else {
-      res.status(400);
-      throw new Error("Could not add items to your shopping list");
+      res.status(404);
+      throw new Error("User does not exist");
     }
   })
 );
