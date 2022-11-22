@@ -16,8 +16,8 @@ shoppingListRouter.post(
       throw new Error("There are no items in your shopping list");
     } else {
       const list = new ShoppingList({
-        user: req.body._id,
         listItems,
+        user: req.body._id,
       });
 
       const createList = await list.save();
@@ -28,9 +28,10 @@ shoppingListRouter.post(
 
 //GET SHOPPING LIST BY ID
 shoppingListRouter.get(
-  "/:id",
+  "/:username",
   asyncHandler(async (req, res) => {
-    const list = await ShoppingList.findById(req.params.id).populate("user");
+    const username = req.params.username;
+    const list = await ShoppingList.find({ username }).populate("user");
     if (list) {
       res.status(200).json(list);
     } else {
