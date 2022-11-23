@@ -20,7 +20,7 @@ shoppingListRouter.post(
       if (itemExists.length > 0) {
         res
           .status(400)
-          .send({ msg: 'Item already exists in your shopping list"' });
+          .send({ msg: "Item already exists in your shopping list" });
       } else {
         const list = new ShoppingList({
           username,
