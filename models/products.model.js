@@ -17,9 +17,10 @@ const productSchema = mongoose.Schema(
     category: { type: String, required: true },
     supermarket: { type: String, required: true },
     reviews: [reviewSchema],
+    priceHistory: { type: Array, required: true },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 

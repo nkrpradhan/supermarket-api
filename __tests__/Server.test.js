@@ -40,24 +40,24 @@ describe("Products", () => {
 describe("Product", () => {
   describe("/api/products/:id", () => {
     describe("GET", () => {
-      test("200: should return a single product identified by ID params", () => {
+      test("200: should return a single product based on product id", () => {
         return request(app)
-          .get("/api/products/6378f86989618c9688407496")
+          .get("/api/products/637cd257c96d3280fe70db46")
           .expect(200)
           .then(({ body }) => {
-            console.log(body);
             const testProduct = {
-              _id: "6378f86989618c9688407496",
-              description: "Eggs",
-              name: "Woodcote 6 Organic Eggs",
-              price: " 1.99",
-              siteLink:
-                "https://www.lidl.co.uk/p/eggs/woodcote-6-organic-eggs/p6730",
-              pictureLink:
-                "https://uk.cat-ret.assets.lidl/catalog5media/uk/article/5204282/xs/520…",
-              category: "eggs",
+              _id: "637cd257c96d3280fe70db46",
+              description: "500g",
+              name: "Baresa Penne Rigate",
               supermarket: "lidl",
-              priceHistory: expect.any(Array),
+              pictureLink:
+                "https://uk.cat-ret.assets.lidl/catalog5media/uk/article/19089/xs/19089_99.jpg",
+              siteLink:
+                "https://www.lidl.co.uk/p/dried/baresa-penne-rigate/p6334",
+              category: "pasta",
+              price: " 0.69",
+              priceHistory: [],
+              reviews: [],
             };
             const product = body;
             expect(product).toBeInstanceOf(Object);
@@ -81,20 +81,20 @@ describe("Users", () => {
     describe("POST", () => {
       test("201: should post a user when login details are valid", () => {
         const postObj = {
-          email: "hohoho@gmail.com",
-          password: "Password",
+          username: "tbgoat",
+          password: "12345678",
         };
         const returnObj = {
-          _id: "6376370f0380785e17ac9e3c",
-          name: "jackie wilson",
-          username: "jackie123",
-          email: "hohoho@gmail.com",
-          createdAt: "2022-11-17T13:28:47.652Z",
+          _id: "637b555ae9dc3ea1ea61f613",
+          name: "aaron",
+          username: "tbgoat",
+          email: "ar12@gmail.com",
+          createdAt: "2022-11-21T10:39:22.513Z",
         };
         return request(app)
           .post("/api/users/login")
           .send(postObj)
-          .expect(201)
+          .expect(200)
           .then(({ body }) => {
             expect(body).toEqual(returnObj);
           });
@@ -118,23 +118,17 @@ describe("Users", () => {
     describe("POST", () => {
       test("201: should post a user with email, name, username and password when registered", () => {
         const postObj = {
-          name: "aaron",
-          email: "ar12@gmail.com",
-          username: "tbgoat",
-          password: "12345678",
-        };
-        const returnObj = {
-          _id: expect.any(String),
-          name: "tom",
-          email: "tb12@gmail.com",
-          username: "tbgoat",
+          name: "kyler",
+          username: "kyler1",
+          email: "kyler1ac@gmail.com",
+          password: "123456",
         };
         return request(app)
           .post("/api/users/register")
           .send(postObj)
           .expect(201)
           .then(({ body }) => {
-            expect(body).toEqual(returnObj);
+            expect(body.message).toEqual("User created");
           });
       });
       test("400: should return an error if user already exists by email", () => {
