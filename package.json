@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --detectOpenHandles",
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "node index.js",
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",

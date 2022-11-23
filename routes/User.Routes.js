@@ -32,7 +32,7 @@ userRouter.post(
   "/register",
   asyncHandler(async (req, res) => {
     const { name, username, email, password } = req.body;
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ username });
     if (userExists) {
       res.status(400);
       throw new Error("User already exists");
@@ -45,12 +45,7 @@ userRouter.post(
     });
 
     if (user) {
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        username: user.username,
-        email: user.email,
-      });
+      res.status(201).json({ message: "User created" });
     } else {
       res.status(400);
       throw new Error("Invalid Info Provided");
