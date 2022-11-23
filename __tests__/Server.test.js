@@ -118,7 +118,7 @@ describe("Users", () => {
     describe("POST", () => {
       test("201: should post a user with email, name, username and password when registered", () => {
         const postObj = {
-          name: "kyler",
+          name: "daniel",
           username: "kyler1",
           email: "kyler1ac@gmail.com",
           password: "123456",

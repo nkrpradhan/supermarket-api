@@ -10,18 +10,25 @@ shoppingListRouter.post(
   "/",
   asyncHandler(async (req, res) => {
     const { username, ...listItems } = req.body;
-    const user = await User.find({ username });
 
-    if (user) {
-      const list = new ShoppingList({
-        username,
-        ...listItems,
-      });
-      const createList = await list.save();
-      res.status(201).json(createList);
-    } else {
+    const user = await User.find({ username });
+    if (!user) {
       res.status(404);
       throw new Error("User does not exist");
+    } else {
+      const { name } = listItems;
+      const itemExists = await ShoppingList.find({ name });
+      if (itemExists) {
+        res.status(400);
+        throw new Error("Item already exists in your shopping list");
+      } else {
+        const list = new ShoppingList({
+          username,
+          ...listItems,
+        });
+        const createList = await list.save();
+        res.status(201).json(createList);
+      }
     }
   })
 );
