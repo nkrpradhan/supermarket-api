@@ -13,14 +13,14 @@ shoppingListRouter.post(
 
     const user = await User.find({ username });
     if (user.length === 0) {
-      res.status(404).send({ msg: "User does not exist" });
+      res.status(404);
+      throw new Error("User does not exist");
     } else {
       const { name } = listItems;
       const itemExists = await ShoppingList.find({ name });
       if (itemExists.length > 0) {
-        res
-          .status(400)
-          .send({ msg: "Item already exists in your shopping list" });
+        res.status(400);
+        throw new Error("Item already exists in your shopping list");
       } else {
         const list = new ShoppingList({
           username,
