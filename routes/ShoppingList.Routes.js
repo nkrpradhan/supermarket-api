@@ -12,13 +12,13 @@ shoppingListRouter.post(
     const { username, ...listItems } = req.body;
 
     const user = await User.find({ username });
-    if (!user) {
+    if (user.length === 0) {
       res.status(404);
       throw new Error("User does not exist");
     } else {
       const { name } = listItems;
       const itemExists = await ShoppingList.find({ name });
-      if (itemExists) {
+      if (itemExists.length > 0) {
         res.status(400);
         throw new Error("Item already exists in your shopping list");
       } else {
