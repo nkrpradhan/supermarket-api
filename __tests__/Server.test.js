@@ -81,15 +81,15 @@ describe("Users", () => {
     describe("POST", () => {
       test("201: should post a user when login details are valid", () => {
         const postObj = {
-          username: "tbgoat",
-          password: "12345678",
+          username: "kyler1",
+          password: "123456",
         };
         const returnObj = {
-          _id: "637b555ae9dc3ea1ea61f613",
-          name: "aaron",
-          username: "tbgoat",
-          email: "ar12@gmail.com",
-          createdAt: "2022-11-21T10:39:22.513Z",
+          _id: "637cdb954b1753fe4e66b9d9",
+          name: "kyler",
+          username: "kyler1",
+          email: "kyler1ac@gmail.com",
+          createdAt: "2022-11-22T14:24:21.510Z",
         };
         return request(app)
           .post("/api/users/login")
@@ -146,6 +146,113 @@ describe("Users", () => {
             expect(body.message).toEqual("Invalid Info Provided");
           });
       });
+    });
+  });
+  describe("/api/users/:username/profile", () => {
+    describe("GET", () => {
+      const testProfile = {
+        _id: "637cd4907d8553b4f0540533",
+        name: "justin",
+        username: "justin10",
+        email: "jherbo10@gmail.com",
+        createdAt: "2022-11-22T13:54:24.616Z",
+      };
+      test("200: should return the user where username input is valid and matches an existing user", () => {
+        return request(app)
+          .get("/api/users/justin10/profile")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body).toEqual(testProfile);
+          });
+      });
+      test("404: should return user not found if no user exists for input username", () => {
+        return request(app)
+          .get("/api/users/banana/profile")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.message).toEqual("User not found");
+          });
+      });
+    });
+    describe("PUT", () => {
+      const updateObj = {
+        email: "tb12@gmail.com",
+      };
+      test("200: should return user profile with updated details", () => {
+        return request(app)
+          .put("/api/users/tbgoat/profile")
+          .send(updateObj)
+          .expect(200)
+          .then(({ body }) => {
+            expect(body._id).toEqual("637b555ae9dc3ea1ea61f613");
+            expect(body.name).toEqual("aaron");
+            expect(body.username).toEqual("tbgoat");
+            expect(body.email).toEqual("tb12@gmail.com");
+          });
+      });
+      test("404: should return user not found error for input username", () => {
+        return request(app)
+          .put("/api/users/banana/profile")
+          .send(updateObj)
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.message).toEqual("User not found");
+          });
+      });
+    });
+  });
+});
+describe("Shopping List", () => {
+  describe("api/shopping-list", () => {
+    describe("POST", () => {
+      test("201: should post product to a user's shopping list", () => {
+        const postObj = {
+          username: "tbgoat",
+          name: "Medium Loaf WM",
+          price: "£2.59",
+          pictureLink:
+            "https://uk.cat-ret.assets.lidl/catalog5media/uk/article/126479/xs/126479_31.jpg",
+          supermarket: "lidl",
+        };
+        return request(app)
+          .post("/api/shopping-list")
+          .send(postObj)
+          .expect(201)
+          .then(({ body }) => {
+            expect(body.username).toEqual("tbgoat");
+            expect(body.name).toEqual("Medium Loaf WM");
+            expect(body.price).toEqual("£2.59");
+            expect(body.pictureLink).toEqual(
+              "https://uk.cat-ret.assets.lidl/catalog5media/uk/article/126479/xs/126479_31.jpg"
+            );
+            expect(body.supermarket).toEqual("lidl");
+          });
+      });
+      test("400: should return error if item already exists in the list", () => {
+        const postObj = {
+          username: "tbgoat",
+          name: "Medium Loaf",
+          price: "£2.59",
+          pictureLink:
+            "https://uk.cat-ret.assets.lidl/catalog5media/uk/article/126479/xs/126479_31.jpg",
+          supermarket: "lidl",
+        };
+        return request(app)
+          .post("/api/shopping-list")
+          .send(postObj)
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.message).toEqual(
+              "Item already exists in your shopping list"
+            );
+          });
+      });
+    });
+  });
+  describe("api/shopping-list/:username", () => {
+    describe("GET", () => {
+      test("200: should ", () => {});
+      test("400: should ", () => {});
     });
   });
 });

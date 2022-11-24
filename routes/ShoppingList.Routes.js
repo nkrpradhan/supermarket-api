@@ -33,7 +33,7 @@ shoppingListRouter.post(
   })
 );
 
-//GET SHOPPING LIST BY ID
+//GET SHOPPING LIST BY USERNAME
 shoppingListRouter.get(
   "/:username",
   asyncHandler(async (req, res) => {

@@ -80,7 +80,7 @@ userRouter.put(
   asyncHandler(async (req, res) => {
     const username = req.params.username;
     const [user] = await User.find({ username });
-    console.log(user);
+
     if (user) {
       if (req.body.name) {
         user.name = req.body.name;
